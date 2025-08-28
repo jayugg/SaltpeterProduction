@@ -4,7 +4,7 @@
     "op": "addmerge",
     "path": "/attributes",
     "value": {
-      "mellowEarthFillAmount": 0.05
+      "nitreBedFillAmount": 0.05
     },
     "side": "Server"
   }

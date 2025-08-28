@@ -1,9 +1,9 @@
 {
   "block-saltpeterbud-0": "Budding saltpeter",
   "block-saltpeterbud-1": "Saltpeter growth",
-  "block-mellowearth-dry": "Dry Mellow Earth",
-  "block-mellowearth-moist": "Moist Mellow Earth",
+  "block-nitrebed-dry": "Dry Nitre Bed",
+  "block-nitrebed-moist": "Moist Nitre Bed",
   "Fill {0}%": "Fill {0}%",
   "Hours to next growth {0}": "Hours to next growth {0}",
-  "blockhelp-mellowearth-placeorganic": "Place organic material"
+  "blockhelp-nitrebed-placeorganic": "Place organic material"
 }

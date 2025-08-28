@@ -1,7 +1,7 @@
 {
-  "code": "mellowearth",
-  "class": "saltpeterproduction:BlockMellowEarth",
-  "entityClass": "saltpeterproduction:BlockEntityMellowEarth",
+  "code": "nitrebed",
+  "class": "saltpeterproduction:BlockNitreBed",
+  "entityClass": "saltpeterproduction:BlockEntityNitreBed",
   "variantgroups": [
     { "code": "state", "states": ["dry", "moist"] }
   ],
@@ -26,7 +26,7 @@
   },
   "drops": [ {
     "type": "block",
-    "code": "mellowearth-dry",
+    "code": "nitrebed-dry",
     "quantity": { "avg": 1, "var": 0 }
   } ],
   "heldTpIdleAnimation": "holdbothhandslarge", "heldRightReadyAnimation": "heldblockready", "heldTpUseAnimation": "twohandplaceblock",

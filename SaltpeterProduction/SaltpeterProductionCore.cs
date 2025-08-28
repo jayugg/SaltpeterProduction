@@ -25,8 +25,8 @@ public class SaltpeterProductionCore : ModSystem
     public override void Start(ICoreAPI api)
     {
         base.Start(api);
-        RegisterBlockClass<BlockMellowEarth>(api, ModId);
-        RegisterBlockEntityClass<BlockEntityMellowEarth>(api, ModId);
+        RegisterBlockClass<BlockNitreBed>(api, ModId);
+        RegisterBlockEntityClass<BlockEntityNitreBed>(api, ModId);
     }
 
     public override void Dispose()

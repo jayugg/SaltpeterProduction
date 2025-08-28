@@ -9,7 +9,7 @@ using Vintagestory.GameContent;
 namespace SaltpeterProduction.Blocks;
 
 [UsedImplicitly(ImplicitUseKindFlags.InstantiatedNoFixedConstructorSignature)]
-public class BlockMellowEarth : Block
+public class BlockNitreBed : Block
 {
     private const string InteractionCacheKey = "mellowEathBlockInteractions";
     
@@ -23,14 +23,14 @@ public class BlockMellowEarth : Block
 
     public override bool OnBlockInteractStart(IWorldAccessor world, IPlayer byPlayer, BlockSelection blockSel)
     {
-        if (world.BlockAccessor.GetBlockEntity(blockSel.Position) is BlockEntityMellowEarth blockEntity)
+        if (world.BlockAccessor.GetBlockEntity(blockSel.Position) is BlockEntityNitreBed blockEntity)
             return blockEntity.OnBlockInteractStart(world, byPlayer, blockSel);
         return base.OnBlockInteractStart(world, byPlayer, blockSel);
     }
 
     public override void OnBlockInteractStop(float secondsUsed, IWorldAccessor world, IPlayer byPlayer, BlockSelection blockSel)
     {
-        if (world.BlockAccessor.GetBlockEntity(blockSel.Position) is BlockEntityMellowEarth blockEntity)
+        if (world.BlockAccessor.GetBlockEntity(blockSel.Position) is BlockEntityNitreBed blockEntity)
             blockEntity.OnBlockInteractStop(world, byPlayer, blockSel);
         else base.OnBlockInteractStop(secondsUsed, world, byPlayer, blockSel);
     }
@@ -49,7 +49,7 @@ public class BlockMellowEarth : Block
         List<ItemStack> organicMaterials = [];
         foreach (var collObj in api.World.Collectibles.Where(c => c.Code != null))
         {
-            if (!(BlockEntityMellowEarth.GetFillAmount(collObj) > 0)) continue;
+            if (!(BlockEntityNitreBed.GetFillAmount(collObj) > 0)) continue;
             if (collObj.IsLiquid() && bucket != null)
             {
                 var bucketStack = new ItemStack(bucket);
@@ -66,7 +66,7 @@ public class BlockMellowEarth : Block
         [
             new WorldInteraction()
             {
-                ActionLangCode = $"{SaltpeterProductionCore.ModId}:blockhelp-mellowearth-placeorganic",
+                ActionLangCode = $"{SaltpeterProductionCore.ModId}:blockhelp-nitrebed-placeorganic",
                 HotKeyCode = "ctrl",
                 MouseButton = EnumMouseButton.Right,
                 Itemstacks = organicMaterials.ToArray()

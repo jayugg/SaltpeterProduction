@@ -62,7 +62,7 @@ public class ModEntityParticles : ModSystem
             if (pos.HorDistanceTo(xPos, zPos) < 2.0) continue;
             var blockEntity =
                 capi.World.BlockAccessor.GetBlockEntity(new BlockPos((int)xPos, (int)yPos, (int)zPos));
-            if (blockEntity is not BlockEntityMellowEarth {HasMaterialStored: true}) continue;
+            if (blockEntity is not BlockEntityNitreBed {HasMaterialStored: true}) continue;
             var cohesion = (float) GameMath.Max(Random.NextDouble() * 1.1, 0.25) / 2f;
             var spawnCount = 10 + Random.Next(21);
             for (var j = 0; j < spawnCount; ++j)

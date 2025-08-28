@@ -10,11 +10,11 @@ using Vintagestory.GameContent;
 namespace SaltpeterProduction.Blocks;
 
 [UsedImplicitly(ImplicitUseKindFlags.InstantiatedNoFixedConstructorSignature)]
-public class BlockEntityMellowEarth : BlockEntity
+public class BlockEntityNitreBed : BlockEntity
 {
-    private const string FillAmountAttributeKey = "mellowEarthFillAmount";
+    private const string FillAmountAttributeKey = "nitreBedFillAmount";
 
-    private const string FillAmountPerLitresAttributeKey = "mellowEarthFillAmountPerLitre";
+    private const string FillAmountPerLitresAttributeKey = "nitreBedAmountPerLitre";
     // TODO Refactor: less hardcoded growth stages and growth rate
     private const int HoursPerGrowthDefault = 72;
     private static readonly AssetLocation SaltpeterBudCode0 = $"{SaltpeterProductionCore.ModId}:saltpeterbud-0";
@@ -134,7 +134,7 @@ public class BlockEntityMellowEarth : BlockEntity
         if (Api is not ICoreServerAPI sapi) return;
         if (!sapi.World.IsFullyLoadedChunk(this.Pos))
             return;
-        if (sapi.World.BlockAccessor.GetBlock(Pos) is not BlockMellowEarth) return;
+        if (sapi.World.BlockAccessor.GetBlock(Pos) is not BlockNitreBed) return;
         // Determine the correct state based on OrganicMaterial
         UpdateVariant();
         if (!HasMaterialStored) return;
