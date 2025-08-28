@@ -1,0 +1,10 @@
+{
+  "type": "code",
+  "modid": "saltpeterproduction",
+  "name": "Saltpeter Production",
+  "side": "universal",
+  "authors": [ "jayu" ],
+  "description": "",
+  "version": "1.0.0",
+  "dependencies": { "game": "" }
+}

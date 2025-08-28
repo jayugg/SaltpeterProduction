@@ -1,0 +1,46 @@
+{
+  "code": "saltpeterbud",
+  "variantgroups": [
+    { "code": "stage", "states": ["0", "1"] }
+  ],
+  "attributes": {
+    "mapColorCode": "settlement"
+  },
+  "blockmaterial": "Soil",
+  "creativeinventory": { "general": ["*"], "terrain": ["*"] },
+  "shape": { "base": "block/saltpeter{stage}" },
+  "replaceable": 6001,
+  "resistance": 1.2,
+  "lightAbsorption": 0,
+  "sidesolid": { "all": false },
+  "sideopaque": { "all": false },
+  "texture": { "base": "game:block/stone/ore/saltpeter" },
+  "dropsByType": {
+    "*-0": [
+      {
+        "type": "item",
+        "code": "game:saltpeter",
+        "quantity": { "avg": 0.2, "var": 0.3 }
+      }
+    ],
+    "*-1": [
+      {
+        "type": "item",
+        "code": "game:saltpeter",
+        "quantity": { "avg": 0.1, "var": 0.4 }
+      }
+    ]
+  },
+  "selectionbox": { "x1": 0, "y1": 0, "z1": 0, "x2": 1, "y2": 0.0625, "z2": 1 },
+  "collisionbox": null,
+  "sounds": {
+    "place": "game:block/sand",
+    "break": "game:block/sand",
+    "hit": "game:block/sand",
+    "walk": "game:walk/sand"
+  },
+  "guiTransform": {
+    "translation": { "x": 0, "y": 2, "z": 0 },
+    "origin": { "x": 0.5, "y": 0.0625, "z": 0.5 }
+  }
+}

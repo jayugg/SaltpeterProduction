@@ -1,0 +1,11 @@
+[
+  {
+    "file": "game:itemtypes/resource/rot.json",
+    "op": "addmerge",
+    "path": "/attributes",
+    "value": {
+      "mellowEarthFillAmount": 0.05
+    },
+    "side": "Server"
+  }
+]

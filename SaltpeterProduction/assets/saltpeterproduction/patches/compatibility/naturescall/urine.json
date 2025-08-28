@@ -1,0 +1,12 @@
+[
+  {
+    "file": "naturescall:itemtypes/urineportion.json",
+    "op": "addmerge",
+    "path": "/attributes",
+    "value": {
+      "mellowEarthFillAmountPerLitre": 1.0
+    },
+    "side": "Server",
+    "dependsOn": [ { "modid": "naturescall" } ]
+  }
+]
