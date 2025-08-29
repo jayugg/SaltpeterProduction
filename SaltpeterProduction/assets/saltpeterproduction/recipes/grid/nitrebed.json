@@ -1,0 +1,13 @@
+[
+  {
+    "name": "Nitre bed",
+    "ingredientPattern": "CCC,CSC,CCC",
+    "ingredients": {
+      "C": { "type": "item", "code": "game:rot", "quantity": 2 },
+      "S": { "type": "item", "code": "game:soil-*"  }
+    },
+    "width": 3,
+    "height": 3,
+    "output": { "type": "block", "code": "saltpeterproduction:nitrebed-dry", "quantity": 1  }
+  }
+]

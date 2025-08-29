@@ -5,7 +5,7 @@
   "variantgroups": [
     { "code": "state", "states": ["dry", "moist"] }
   ],
-  "creativeinventory": { "general": ["*"] },
+  "creativeinventory": { "general": ["*-dry"] },
   "shape": { "base": "game:block/basic/cube" },
   "blockmaterial": "Soil",
   "textures": {
