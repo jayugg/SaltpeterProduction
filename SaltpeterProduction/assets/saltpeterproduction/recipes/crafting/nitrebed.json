@@ -1,0 +1,13 @@
+[
+  {
+    "ingredientPattern": "CCC,CSC,CCC",
+    "ingredients": {
+      "C": { "type": "item", "code": "game:rot", "quantity": 4 },
+      "S": { "type": "item", "code": "game:soil-*", "quantity": 8  }
+    },
+    "recipeGroup": 1,
+    "width": 3,
+    "height": 3,
+    "output": { "type": "block", "code": "nitrebed-dry", "quantity": 1  }
+  }
+]

@@ -3,8 +3,8 @@
     "name": "Nitre bed",
     "ingredientPattern": "CCC,CSC,CCC",
     "ingredients": {
-      "C": { "type": "item", "code": "game:rot", "quantity": 2 },
-      "S": { "type": "item", "code": "game:soil-*"  }
+      "C": { "type": "item", "code": "game:rot", "quantity": 3 },
+      "S": { "type": "item", "code": "game:soil-*", "allowedVariants": ["verylow-none", "low-none", "medium-none"]  }
     },
     "width": 3,
     "height": 3,
