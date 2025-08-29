@@ -29,7 +29,7 @@ public class BlockEntityNitreBed : BlockEntity
         set => _organicMaterial = Math.Clamp(value, 0f, 1f);
     }
     private double TotalHoursLastGrowth { get; set; }
-    private Block BlockAbove => Api.World.BlockAccessor.GetBlock(Pos.Copy().Up());
+    private Block BlockAbove => Api.World.BlockAccessor.GetBlock(Pos.UpCopy());
     private double HoursPerGrowth =>
         Block.Attributes["hoursPerGrowth"]?.AsDouble(HoursPerGrowthDefault) ?? HoursPerGrowthDefault;
     public bool HasMaterialStored => OrganicMaterial > 1e-3;
@@ -149,7 +149,7 @@ public class BlockEntityNitreBed : BlockEntity
                 SaltpeterProductionCore.Logger?.VerboseDebug($"Not enough material {OrganicMaterial}");
                 return;
             }
-            sapi.World.BlockAccessor.SetBlock(saltpeterGrowth.BlockId, Pos.Copy().Up());
+            sapi.World.BlockAccessor.SetBlock(saltpeterGrowth.BlockId, Pos.UpCopy());
             OrganicMaterial -= 0.5f;
             TotalHoursLastGrowth = totalHours;
             MarkDirty();
@@ -177,7 +177,7 @@ public class BlockEntityNitreBed : BlockEntity
         if (BlockAbove.Code.ToString().Contains(SaltpeterBudCode0) ||
             BlockAbove.Code.ToString().Contains(SaltpeterBudCode1))
         {
-            Api.World.BlockAccessor.BreakBlock(Pos.Copy().Up(), byPlayer);
+            Api.World.BlockAccessor.BreakBlock(Pos.UpCopy(), byPlayer);
         }
     }
 
