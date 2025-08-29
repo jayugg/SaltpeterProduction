@@ -1,2 +1,2 @@
 v1.0.0 Changelog
-- Initial release
+- [Fix] Nitre bed recipe showing up but not working
