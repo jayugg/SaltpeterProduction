@@ -1,3 +1,4 @@
 v1.0.2 Changelog
+- [Backport] 1.20 backport
 - [Tweak] Material required per growth is less hardcoded
 - [Balance] Now full bed is enough to fully grow saltpetre
