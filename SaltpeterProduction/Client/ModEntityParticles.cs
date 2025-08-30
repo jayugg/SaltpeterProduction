@@ -59,7 +59,7 @@ public class ModEntityParticles : ModSystem
             var xPos = pos.X + (Random.NextDouble() - 0.5) * 24;
             var yPos = pos.Y + (Random.NextDouble() - 0.5) * 24;
             var zPos = pos.Z + (Random.NextDouble() - 0.5) * 24;
-            if (pos.HorDistanceTo(xPos, zPos) < 2.0) continue;
+            if (pos.HorDistanceTo(new EntityPos(xPos, yPos, zPos)) < 2.0) continue;
             var blockEntity =
                 capi.World.BlockAccessor.GetBlockEntity(new BlockPos((int)xPos, (int)yPos, (int)zPos));
             if (blockEntity is not BlockEntityNitreBed {HasMaterialStored: true}) continue;
