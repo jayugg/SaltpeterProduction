@@ -13,6 +13,7 @@
     "all": {"base": "game:block/soil/ferthigh"}
   },
   "attributes": {
+    "materialPerGrowth": 0.3,
     "hoursPerGrowth": 96,
     "mapColorCode": "settlement"
   },

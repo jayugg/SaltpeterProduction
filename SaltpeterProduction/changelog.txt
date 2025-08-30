@@ -1,2 +1,3 @@
-v1.0.0 Changelog
-- [Fix] Nitre bed recipe showing up but not working
+v1.0.2 Changelog
+- [Tweak] Material required per growth is less hardcoded
+- [Balance] Now full bed is enough to fully grow saltpetre
