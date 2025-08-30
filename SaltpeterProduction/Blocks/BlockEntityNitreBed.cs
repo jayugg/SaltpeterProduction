@@ -13,10 +13,10 @@ namespace SaltpeterProduction.Blocks;
 public class BlockEntityNitreBed : BlockEntity
 {
     private const string FillAmountAttributeKey = "nitreBedFillAmount";
-
     private const string FillAmountPerLitresAttributeKey = "nitreBedAmountPerLitre";
     // TODO Refactor: less hardcoded growth stages and growth rate
     private const int HoursPerGrowthDefault = 72;
+    private const float MaterialPerGrowthDefault = 0.3f;
     private static readonly AssetLocation SaltpeterBudCode0 = $"{SaltpeterProductionCore.ModId}:saltpeterbud-0";
     private static readonly AssetLocation SaltpeterBudCode1 = $"{SaltpeterProductionCore.ModId}:saltpeterbud-1";
     private static readonly AssetLocation SaltpeterCode = "game:saltpeter-d";
@@ -32,6 +32,8 @@ public class BlockEntityNitreBed : BlockEntity
     private Block BlockAbove => Api.World.BlockAccessor.GetBlock(Pos.UpCopy());
     private double HoursPerGrowth =>
         Block.Attributes["hoursPerGrowth"]?.AsDouble(HoursPerGrowthDefault) ?? HoursPerGrowthDefault;
+    private float MaterialPerGrowth =>
+        Block.Attributes["materialPerGrowth"]?.AsFloat(MaterialPerGrowthDefault) ?? MaterialPerGrowthDefault;
     public bool HasMaterialStored => OrganicMaterial > 1e-3;
     
     public override void Initialize(ICoreAPI api)
@@ -144,13 +146,13 @@ public class BlockEntityNitreBed : BlockEntity
         var hoursPerGrowth = Block.Attributes["hoursPerGrowth"]?.AsDouble(HoursPerGrowthDefault) ?? HoursPerGrowthDefault;
         if ((totalHours - TotalHoursLastGrowth > hoursPerGrowth))
         {
-            if (OrganicMaterial < 0.5f)
+            if (OrganicMaterial < MaterialPerGrowth)
             {
                 SaltpeterProductionCore.Logger?.VerboseDebug($"Not enough material {OrganicMaterial}");
                 return;
             }
             sapi.World.BlockAccessor.SetBlock(saltpeterGrowth.BlockId, Pos.UpCopy());
-            OrganicMaterial -= 0.5f;
+            OrganicMaterial -= MaterialPerGrowth;
             TotalHoursLastGrowth = totalHours;
             MarkDirty();
         }
@@ -194,7 +196,7 @@ public class BlockEntityNitreBed : BlockEntity
     public override void FromTreeAttributes(ITreeAttribute tree, IWorldAccessor worldAccessForResolve)
     {
         base.FromTreeAttributes(tree, worldAccessForResolve);
-        OrganicMaterial = Math.Clamp(tree.GetFloat("organicMaterial"), 0, 1);
+        OrganicMaterial = tree.GetFloat("organicMaterial");
         TotalHoursLastGrowth = tree.GetDouble("totalHoursLastGrowth");
     }
     
