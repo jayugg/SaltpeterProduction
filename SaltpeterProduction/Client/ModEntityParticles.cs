@@ -63,11 +63,12 @@ public class ModEntityParticles : ModSystem
             var blockEntity =
                 capi.World.BlockAccessor.GetBlockEntity(new BlockPos((int)xPos, (int)yPos, (int)zPos));
             if (blockEntity is not BlockEntityNitreBed {HasMaterialStored: true}) continue;
-            var cohesion = (float) GameMath.Max(Random.NextDouble() * 1.1, 0.25) / 2f;
+            var cohesion = (float) GameMath.Max(Random.NextDouble() * 1.1, 0.20) / 2.5f;
             var spawnCount = 10 + Random.Next(21);
             for (var j = 0; j < spawnCount; ++j)
             {
-                entityParticleSystem?.SpawnParticle(new EntityParticleMatingGnats(capi, cohesion, xPos + 0.5, yPos + 0.5, zPos + 0.5));
+                entityParticleSystem?.SpawnParticle(new EntityParticleMatingGnats(capi, cohesion,
+                    xPos + 0.5, yPos + Random.NextDouble() + 0.5, zPos + 0.5));
             }
             ++attempts;
         }

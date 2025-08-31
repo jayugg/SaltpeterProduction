@@ -1,5 +1,7 @@
-﻿using HarmonyLib;
+﻿using System;
+using HarmonyLib;
 using JetBrains.Annotations;
+using SaltpeterProduction.Behavior;
 using SaltpeterProduction.Blocks;
 using Vintagestory.API.Common;
 
@@ -27,6 +29,7 @@ public class SaltpeterProductionCore : ModSystem
         base.Start(api);
         RegisterBlockClass<BlockNitreBed>(api, ModId);
         RegisterBlockEntityClass<BlockEntityNitreBed>(api, ModId);
+        api.RegisterBlockBehaviorClass($"{ModId}:NitreBedSource", typeof(BlockBehaviorNitreBedSource));
     }
 
     public override void Dispose()
