@@ -1,3 +1,6 @@
-v1.0.2 Changelog
-- [Tweak] Material required per growth is less hardcoded
-- [Balance] Now full bed is enough to fully grow saltpetre
+v1.0.3 Changelog
+- [Improvement] Better interactions
+- [Improvement] Create nitre bed from farmland
+- [Balance] Nitre bed converts back to soil when growth is finished
+- [Balance] Nitre bed will slowly lose material if it is not actively contributing to growth
+- [Tweak] Slightly better gnat particles

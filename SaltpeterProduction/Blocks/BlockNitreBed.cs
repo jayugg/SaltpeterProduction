@@ -11,14 +11,14 @@ namespace SaltpeterProduction.Blocks;
 [UsedImplicitly(ImplicitUseKindFlags.InstantiatedNoFixedConstructorSignature)]
 public class BlockNitreBed : Block
 {
-    private const string InteractionCacheKey = "mellowEathBlockInteractions";
-    
-    private WorldInteraction[] _interactions = [];
+    private const string OrganicMaterialStacksCacheKey = "BlockNitreBed.organicMaterialStacks";
+    private ItemStack[] _organicMaterialStacks = [];
     
     public override void OnLoaded(ICoreAPI coreApi)
     {
         base.OnLoaded(coreApi);
-        _interactions = ObjectCacheUtil.GetOrCreate(coreApi, InteractionCacheKey, (CreateCachableObjectDelegate<WorldInteraction[]>)(CreateWorldInteractions));
+        _organicMaterialStacks = ObjectCacheUtil.GetOrCreate(coreApi, OrganicMaterialStacksCacheKey,
+            (CreateCachableObjectDelegate<ItemStack[]>)(() => GetOrganicMaterialStacks(coreApi))).Select(s => s.Clone()).ToArray();
     }
 
     public override bool OnBlockInteractStart(IWorldAccessor world, IPlayer byPlayer, BlockSelection blockSel)
@@ -28,20 +28,31 @@ public class BlockNitreBed : Block
         return base.OnBlockInteractStart(world, byPlayer, blockSel);
     }
 
-    public override void OnBlockInteractStop(float secondsUsed, IWorldAccessor world, IPlayer byPlayer, BlockSelection blockSel)
+    public override bool OnBlockInteractStep(float secondsUsed, IWorldAccessor world, IPlayer byPlayer, BlockSelection blockSel)
     {
         if (world.BlockAccessor.GetBlockEntity(blockSel.Position) is BlockEntityNitreBed blockEntity)
-            blockEntity.OnBlockInteractStop(world, byPlayer, blockSel);
-        else base.OnBlockInteractStop(secondsUsed, world, byPlayer, blockSel);
+            return blockEntity.OnBlockInteractStep(world, byPlayer, blockSel);
+        return base.OnBlockInteractStep(secondsUsed, world, byPlayer, blockSel);
     }
 
     public override WorldInteraction[] GetPlacedBlockInteractionHelp(IWorldAccessor world, BlockSelection selection, IPlayer forPlayer)
     {
         var baseInteractions = base.GetPlacedBlockInteractionHelp(world, selection, forPlayer);
-        return _interactions.Append(baseInteractions);
+        if (_organicMaterialStacks.Length == 0) return baseInteractions;
+        WorldInteraction[] newInteractions =
+        [
+            new()
+            {
+                ActionLangCode = $"{SaltpeterProductionCore.ModId}:blockhelp-nitrebed-placeorganic",
+                HotKeyCode = "ctrl",
+                MouseButton = EnumMouseButton.Right,
+                Itemstacks = _organicMaterialStacks.ToArray()
+            }
+        ];
+        return newInteractions.Append(baseInteractions);
     }
 
-    private WorldInteraction[] CreateWorldInteractions()
+    public static ItemStack[] GetOrganicMaterialStacks(ICoreAPI api)
     {
         const string bucketCode = "game:woodbucket";
         var bucket = api.World.GetBlock(bucketCode) as BlockBucket ??
@@ -58,19 +69,9 @@ public class BlockNitreBed : Block
                 organicMaterials.Add(bucketStack);
             }
             else
-            {
                 organicMaterials.Add(new ItemStack(collObj));
-            }
         }
-        return
-        [
-            new WorldInteraction()
-            {
-                ActionLangCode = $"{SaltpeterProductionCore.ModId}:blockhelp-nitrebed-placeorganic",
-                HotKeyCode = "ctrl",
-                MouseButton = EnumMouseButton.Right,
-                Itemstacks = organicMaterials.ToArray()
-            }
-        ];
+
+        return organicMaterials.ToArray();
     }
 }

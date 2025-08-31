@@ -2,5 +2,8 @@ namespace SaltpeterProduction.Blocks;
 
 public enum SaltpeterGrowthStage
 {
-    Bud, Growth, Full
+    Start = 0,
+    Bud = 1,
+    Growth = 2,
+    Full = 3
 }

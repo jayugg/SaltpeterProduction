@@ -1,0 +1,16 @@
+[
+  {
+    "file": "game:blocktypes/soil/farmland.json",
+    "op": "addMerge",
+    "path": "/behaviorsByType",
+    "value": {
+      "@(.*)-(verylow|low|medium)": [{
+        "name": "saltpeterproduction:NitreBedSource",
+        "properties": {
+          "nitreBedCode": "saltpeterproduction:nitrebed-dry",
+          "materialRequired": 0.5
+        }
+      }]
+    }
+  }
+]
