@@ -1,6 +1,7 @@
 using System;
-using System.Collections.Generic;
+using System.Linq;
 using SaltpeterProduction.Blocks;
+using SaltpeterProduction.Util;
 using Vintagestory.API.Client;
 using Vintagestory.API.Common;
 using Vintagestory.API.Datastructures;
@@ -18,7 +19,7 @@ public class BlockBehaviorNitreBedSource(Block block) : BlockBehavior(block)
     private float MaterialRequired { get; set; } = DefaultMaterialRequired;
     private AssetLocation? NitreBedCode { get; set; }
     private BlockNitreBed? NitreBedBlock { get; set; }
-    private List<ItemStack> _organicMaterialStacks = [];
+    private ItemStack[] _organicMaterialStacks = [];
     
     public override void Initialize(JsonObject properties)
     {
@@ -56,7 +57,8 @@ public class BlockBehaviorNitreBedSource(Block block) : BlockBehavior(block)
                 $"Please check your behavior in the blocktype.");
         
         _organicMaterialStacks = ObjectCacheUtil.GetOrCreate(api, OrganicMaterialStacksCacheKey,
-            (CreateCachableObjectDelegate<List<ItemStack>>)(() => BlockNitreBed.GetOrganicMaterialStacks(api)));
+            (CreateCachableObjectDelegate<ItemStack[]>)(() => BlockNitreBed.GetOrganicMaterialStacks(api))).
+            Select(s => s.Clone()).ToArray();
         
         // We update these to reflect the required stack size
         foreach (var stack in _organicMaterialStacks)
@@ -74,8 +76,9 @@ public class BlockBehaviorNitreBedSource(Block block) : BlockBehavior(block)
         if (!byPlayer.Entity.Controls.CtrlKey) return false;
         var heldItemStack = byPlayer.InventoryManager?.ActiveHotbarSlot?.Itemstack;
         if (heldItemStack == null) return false;
+        if (!BlockEntityNitreBed.CanFillFromPlayer(byPlayer)) return false;
         handling = EnumHandling.PreventSubsequent;
-        return BlockEntityNitreBed.CanFillFromPlayer(byPlayer);
+        return true;
     }
 
     public override void OnBlockInteractStop(float secondsUsed, IWorldAccessor world, IPlayer byPlayer, BlockSelection? blockSel,
@@ -110,6 +113,7 @@ public class BlockBehaviorNitreBedSource(Block block) : BlockBehavior(block)
             var contentStack = container.GetContent(heldItemStack);
             if (contentStack is not { Collectible: not null, StackSize: > 0 }) return false;
             var fillAmountPerLitres = BlockEntityNitreBed.GetFillAmountPerLitres(contentStack.Collectible);
+            if (fillAmountPerLitres.IsZero()) return false;
             var requiredLitres = MaterialRequired / fillAmountPerLitres;
             if (requiredLitres > container.GetCurrentLitres(heldItemStack)) return false;
             var takenAmount = container.TryTakeLiquid(heldItemStack, requiredLitres)?.StackSize ?? 0;
@@ -118,6 +122,7 @@ public class BlockBehaviorNitreBedSource(Block block) : BlockBehavior(block)
         else
         {
             var fillAmount = BlockEntityNitreBed.GetFillAmount(heldItemStack.Collectible);
+            if (fillAmount.IsZero()) return false;
             var requiredItems = (int) Math.Ceiling(MaterialRequired / fillAmount);
             if (requiredItems > heldItemStack.StackSize) return false;
             byPlayer.InventoryManager?.ActiveHotbarSlot?.TakeOut(requiredItems);
@@ -130,7 +135,7 @@ public class BlockBehaviorNitreBedSource(Block block) : BlockBehavior(block)
         ref EnumHandling handling)
     {
         var baseInteractions = base.GetPlacedBlockInteractionHelp(world, selection, forPlayer, ref handling);
-        if (_organicMaterialStacks.Count == 0) return baseInteractions;
+        if (_organicMaterialStacks.Length == 0) return baseInteractions;
         WorldInteraction[] newInteractions =
         [
             new()

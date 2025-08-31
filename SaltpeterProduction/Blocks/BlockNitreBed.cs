@@ -4,7 +4,6 @@ using JetBrains.Annotations;
 using Vintagestory.API.Client;
 using Vintagestory.API.Common;
 using Vintagestory.API.Util;
-using Vintagestory.Common;
 using Vintagestory.GameContent;
 
 namespace SaltpeterProduction.Blocks;
@@ -13,13 +12,13 @@ namespace SaltpeterProduction.Blocks;
 public class BlockNitreBed : Block
 {
     private const string OrganicMaterialStacksCacheKey = "BlockNitreBed.organicMaterialStacks";
-    private List<ItemStack> _organicMaterialStacks = [];
+    private ItemStack[] _organicMaterialStacks = [];
     
     public override void OnLoaded(ICoreAPI coreApi)
     {
         base.OnLoaded(coreApi);
         _organicMaterialStacks = ObjectCacheUtil.GetOrCreate(coreApi, OrganicMaterialStacksCacheKey,
-            (CreateCachableObjectDelegate<List<ItemStack>>)(() => GetOrganicMaterialStacks(coreApi)));
+            (CreateCachableObjectDelegate<ItemStack[]>)(() => GetOrganicMaterialStacks(coreApi))).Select(s => s.Clone()).ToArray();
     }
 
     public override bool OnBlockInteractStart(IWorldAccessor world, IPlayer byPlayer, BlockSelection blockSel)
@@ -39,7 +38,7 @@ public class BlockNitreBed : Block
     public override WorldInteraction[] GetPlacedBlockInteractionHelp(IWorldAccessor world, BlockSelection selection, IPlayer forPlayer)
     {
         var baseInteractions = base.GetPlacedBlockInteractionHelp(world, selection, forPlayer);
-        if (_organicMaterialStacks.Count == 0) return baseInteractions;
+        if (_organicMaterialStacks.Length == 0) return baseInteractions;
         WorldInteraction[] newInteractions =
         [
             new()
@@ -53,7 +52,7 @@ public class BlockNitreBed : Block
         return newInteractions.Append(baseInteractions);
     }
 
-    public static List<ItemStack> GetOrganicMaterialStacks(ICoreAPI api)
+    public static ItemStack[] GetOrganicMaterialStacks(ICoreAPI api)
     {
         const string bucketCode = "game:woodbucket";
         var bucket = api.World.GetBlock(bucketCode) as BlockBucket ??
@@ -73,6 +72,6 @@ public class BlockNitreBed : Block
                 organicMaterials.Add(new ItemStack(collObj));
         }
 
-        return organicMaterials;
+        return organicMaterials.ToArray();
     }
 }
